@@ -81,9 +81,9 @@ jobs:
         run: find . -type f -name "*.env" -delete
       - name: Run Kolla Build
         env:
-          KOLLA_USE_CACHE: no
           KOLLA_INSTALL_TYPE: source
           KOLLA_BUILD_PROFILE: base
+          KOLLA_BUILD_SUBPROFILE: all
           KOLLA_BASE: ${{ matrix.base_os }}
           KOLLA_BASE_TAG: ${{ matrix.os_tag }}
           KOLLA_BASE_ARCH: ${{ matrix.arch }}
