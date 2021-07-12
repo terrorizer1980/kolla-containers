@@ -26,9 +26,12 @@ jobs:
           - base_os: ubuntu
             os_tag: 18.04
           - base_os: centos
-            os_tag: 7
-          - base_os: centos
             os_tag: 8
+          - extra_os: centos7
+            base_os: centos
+            os_tag: 7
+            arch: x86_64
+            platform: linux/amd64
     steps:
       - name: Set env to staging
         if: endsWith(github.ref, '/staging')
@@ -83,7 +86,7 @@ jobs:
           KOLLA_BASE_TAG: ${{ matrix.os_tag }}
           KOLLA_BASE_ARCH: ${{ matrix.arch }}
           DOCKER_DEFAULT_PLATFORM: ${{ matrix.platform }}
-          DOCKER_TAG: ${{ env.OPENSTACK_BASE_RELEASE }}-${{ matrix.base_os }}${{ matrix.os_tag}}-${{ matrix.docker_tag }}
+          DOCKER_TAG: ${{ env.OPENSTACK_BASE_RELEASE }}-${{ matrix.base_os }}${{ matrix.os_tag}}-${{ matrix.arch }}
         run: make build
       - name: List Build Images
         run: docker image ls
