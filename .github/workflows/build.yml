@@ -26,9 +26,9 @@ jobs:
           - { base_os: debian, os_tag: 10, arch: aarch64 } # Raspberry Pi
         include:
           - cfg.arch: aarch64
-            cfg.platform: linux/arm64
+            platform: linux/arm64
           - cfg.arch: x86_64
-            cfg.platform: linux/amd64
+            platform: linux/amd64
     steps:
       - name: Set env to staging
         if: endsWith(github.ref, '/staging')
@@ -82,7 +82,7 @@ jobs:
           KOLLA_BASE: ${{ matrix.cfg.base_os }}
           KOLLA_BASE_TAG: ${{ matrix.cfg.os_tag }}
           KOLLA_BASE_ARCH: ${{ matrix.cfg.arch }}
-          DOCKER_DEFAULT_PLATFORM: ${{ matrix.cfg.platform }}
+          DOCKER_DEFAULT_PLATFORM: ${{ matrix.platform }}
           DOCKER_TAG: ${{ env.OPENSTACK_BASE_RELEASE }}-${{ matrix.cfg.base_os }}${{ matrix.cfg.os_tag}}-${{ matrix.cfg.arch }}
         run: make build
       - name: List Build Images
