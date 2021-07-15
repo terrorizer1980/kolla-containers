@@ -14,16 +14,15 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        profile:
-          - base
-          - neutron
-          - zun
+        build:
+          - { profile: zun, subprofile: compute }
+          - { profile: base, subprofile: edge }
         cfg:
           - { base_os: ubuntu, os_tag: 18.04, arch: x86_64, platform: linux/amd64 } # x86 PCs
-          - { base_os: ubuntu, os_tag: 18.04, arch: aarch64, platform: linux/arm64 } # Jetson nano
-          - { base_os: centos, os_tag: 8, arch: x86_64, platform: linux/amd64 } # associate site mgmt nodes
-          - { base_os: centos, os_tag: 7, arch: x86_64, platform: linux/amd64 } # UC and TACC mgmt nodes
-          - { base_os: debian, os_tag: 10, arch: aarch64, platform: linux/arm64 } # Raspberry Pi
+          # - { base_os: ubuntu, os_tag: 18.04, arch: aarch64, platform: linux/arm64 } # Jetson nano
+          # - { base_os: centos, os_tag: 8, arch: x86_64, platform: linux/amd64 } # associate site mgmt nodes
+          # - { base_os: centos, os_tag: 7, arch: x86_64, platform: linux/amd64 } # UC and TACC mgmt nodes
+          # - { base_os: debian, os_tag: 10, arch: aarch64, platform: linux/arm64 } # Raspberry Pi
 
     steps:
       - name: Set env to staging
@@ -73,8 +72,8 @@ jobs:
       - name: Run Kolla Build
         env:
           KOLLA_INSTALL_TYPE: source
-          KOLLA_BUILD_PROFILE: base
-          KOLLA_BUILD_SUBPROFILE: all
+          KOLLA_BUILD_PROFILE: ${{ matrix.build.profile }}
+          KOLLA_BUILD_SUBPROFILE: ${{ matrix.build.subprofile }}
           KOLLA_BASE: ${{ matrix.cfg.base_os }}
           KOLLA_BASE_TAG: ${{ matrix.cfg.os_tag }}
           KOLLA_BASE_ARCH: ${{ matrix.cfg.arch }}
