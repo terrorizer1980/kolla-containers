@@ -16,6 +16,7 @@ jobs:
       matrix:
         profile:
           - base
+          - neutron
           - zun
         cfg:
           - { base_os: ubuntu, os_tag: 18.04, arch: x86_64 } # x86 PCs
