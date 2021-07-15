@@ -19,16 +19,12 @@ jobs:
           - neutron
           - zun
         cfg:
-          - { base_os: ubuntu, os_tag: 18.04, arch: x86_64 } # x86 PCs
-          - { base_os: ubuntu, os_tag: 18.04, arch: aarch64 } # Jetson nano
-          - { base_os: centos, os_tag: 8, arch: x86_64 } # associate site mgmt nodes
-          - { base_os: centos, os_tag: 7, arch: x86_64 } # UC and TACC mgmt nodes
-          - { base_os: debian, os_tag: 10, arch: aarch64 } # Raspberry Pi
-        include:
-          - cfg.arch: aarch64
-            platform: linux/arm64
-          - cfg.arch: x86_64
-            platform: linux/amd64
+          - { base_os: ubuntu, os_tag: 18.04, arch: x86_64, platform: linux/amd64 } # x86 PCs
+          - { base_os: ubuntu, os_tag: 18.04, arch: aarch64, platform: linux/arm64 } # Jetson nano
+          - { base_os: centos, os_tag: 8, arch: x86_64, platform: linux/amd64 } # associate site mgmt nodes
+          - { base_os: centos, os_tag: 7, arch: x86_64, platform: linux/amd64 } # UC and TACC mgmt nodes
+          - { base_os: debian, os_tag: 10, arch: aarch64, platform: linux/arm64 } # Raspberry Pi
+
     steps:
       - name: Set env to staging
         if: endsWith(github.ref, '/staging')
@@ -82,7 +78,7 @@ jobs:
           KOLLA_BASE: ${{ matrix.cfg.base_os }}
           KOLLA_BASE_TAG: ${{ matrix.cfg.os_tag }}
           KOLLA_BASE_ARCH: ${{ matrix.cfg.arch }}
-          DOCKER_DEFAULT_PLATFORM: ${{ matrix.platform }}
+          DOCKER_DEFAULT_PLATFORM: ${{ matrix.cfg.platform }}
           DOCKER_TAG: ${{ env.OPENSTACK_BASE_RELEASE }}-${{ matrix.cfg.base_os }}${{ matrix.cfg.os_tag}}-${{ matrix.cfg.arch }}
         run: make build
       - name: List Build Images
