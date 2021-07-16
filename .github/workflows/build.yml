@@ -19,6 +19,7 @@ jobs:
       fail-fast: false
       matrix:
         build:
+          - { profile: base }
           - { profile: base, subprofile: edge }
           - { profile: cyborg }
           - { profile: neutron }
