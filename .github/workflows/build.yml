@@ -5,9 +5,10 @@ on:
 
 env:
   DOCKER_REGISTRY: ghcr.io
+  BASE_NAMESPACE: chameleoncloud
   KOLLA_BRANCH: chameleoncloud/train
   OPENSTACK_BASE_RELEASE: train
-  KOLLA_NAMESPACE: kolla-dev
+  KOLLA_NAMESPACE: chameleoncloud/kolla-dev
 jobs:
   buildx:
     environment: Chameleon CI
@@ -35,12 +36,12 @@ jobs:
       - name: Set env to dev
         if: endsWith(github.ref, '/edge-builds')
         run: |
-          echo "KOLLA_NAMESPACE=kolla-dev" >> $GITHUB_ENV
+          echo "KOLLA_NAMESPACE=$BASE_NAMESPACE/kolla-dev" >> $GITHUB_ENV
           echo "KOLLA_PUSH=yes" >> $GITHUB_ENV
       - name: Set env to staging
         if: endsWith(github.ref, '/staging')
         run: |
-          echo "KOLLA_NAMESPACE=kolla-dev" >> $GITHUB_ENV
+          echo "KOLLA_NAMESPACE=$BASE_NAMESPACE/kolla-dev" >> $GITHUB_ENV
           echo "KOLLA_PUSH=yes" >> $GITHUB_ENV
       - name: Set env to production
         if: endsWith(github.ref, '/master')
