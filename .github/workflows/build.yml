@@ -32,6 +32,11 @@ jobs:
           # - { base_os: debian, os_tag: 10, arch: aarch64, platform: linux/arm64 } # Raspberry Pi
 
     steps:
+      - name: Set env to dev
+        if: endsWith(github.ref, '/edge-builds')
+        run: |
+          echo "KOLLA_NAMESPACE=kolla-dev" >> $GITHUB_ENV
+          echo "KOLLA_PUSH=yes" >> $GITHUB_ENV
       - name: Set env to staging
         if: endsWith(github.ref, '/staging')
         run: |
