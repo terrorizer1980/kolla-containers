@@ -15,8 +15,10 @@ jobs:
       fail-fast: false
       matrix:
         build:
-          - { profile: zun, subprofile: compute }
           - { profile: base, subprofile: edge }
+          - { profile: cyborg }
+          - { profile: neutron }
+          - { profile: zun, subprofile: compute }
         cfg:
           - { base_os: ubuntu, os_tag: 18.04, arch: x86_64, platform: linux/amd64 } # x86 PCs
           # - { base_os: ubuntu, os_tag: 18.04, arch: aarch64, platform: linux/arm64 } # Jetson nano
