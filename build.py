@@ -112,7 +112,7 @@ def cli(config_file=None, config_set=None, build_dir=None, push=None, use_cache=
 
     kolla_argv = []
     for arg, value in kolla_config.items():
-        if arg == "profiles":
+        if (arg == "profiles") and (profile is not None):
             for profile in value:
                 kolla_argv.append(f"--profile={profile}")
         elif value is not None:
