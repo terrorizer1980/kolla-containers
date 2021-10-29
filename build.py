@@ -178,7 +178,7 @@ def cli(config_file=None, config_set=None, profile=None, pattern=None, build_dir
 
     # Kolla reads its input straight from sys.argv
     sys.argv = [""] + kolla_argv
-    bad, good, unmatched, skipped, unbuildable = kolla_build.run_build()
+    bad, good, unmatched, skipped, unbuildable, fail_allowed  = kolla_build.run_build()
     if bad:
         sys.exit(1)
 
